@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+  labels:
+    app: mydb
+    type: database
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mydb
+  template:
+    metadata:
+      labels:
+        app: mydb
+        type: database-pod
+    spec:
+      containers:
+        - name: mydatabase-pod
+          image: dockersamples/k8s-wordsmith-db
+          ports:
+            - containerPort: 5432

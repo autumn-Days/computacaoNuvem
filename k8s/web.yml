@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webServer
+  labels:
+    app: myWebServer
+    type: worldWideWebServer
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myWebServer
+  template:
+    metadata:
+      labels:
+        app: myWebServer
+        type: webServer-pod
+    spec:
+      containers:
+        - name: mywebserver-pod
+          image: dockersamples/k8s-wordsmith-web
+          ports:
+            - containerPort: 80
+      env:
+        - name: API_URI
+          value: http://api:8080
